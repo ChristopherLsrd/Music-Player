@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musicplayer/model/bar_choice.dart';
+import 'package:musicplayer/views/music_view.dart';
 
 //Home page
 
@@ -11,7 +12,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   int currentIndex=0;
   List<BarChoice> items= [
-    BarChoice(label: "Music", iconData: Icons.music_note, page: Container()),
+    BarChoice(label: "Music", iconData: Icons.music_note, page: MusicView()),
     BarChoice(label: "Favorites", iconData: Icons.whatshot, page: Container()),
     BarChoice(label: "Search", iconData: Icons.search, page: Container()),
   ];
@@ -42,9 +43,7 @@ class HomeState extends State<Home> {
           ),
         )),
       ),
-      body: Center(
-        child: Text("App"),
-      ),
+      body: items[currentIndex].page,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         items: items.map((i) => i.item).toList(),

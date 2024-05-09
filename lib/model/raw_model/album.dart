@@ -1,5 +1,5 @@
 import 'package:musicplayer/model/raw_model/Artist.dart';
-import 'package:musicplayer/model/raw_model/Song.dart';
+import 'package:musicplayer/model/raw_model/song.dart';
 
 class Album{
   String title;
