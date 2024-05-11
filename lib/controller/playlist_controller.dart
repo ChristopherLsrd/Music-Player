@@ -34,7 +34,7 @@ class PlaylistController extends StatelessWidget {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return MyPlayerController();
+                          return MyPlayerController(songToPlay: playlist[index],playList: playlist,);
                         }));
                       },
                     );

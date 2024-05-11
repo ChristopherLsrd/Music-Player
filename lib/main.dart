@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:musicplayer/controller/home.dart';
 
 void main() {
@@ -14,7 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Music player',
-      theme: ThemeData.light(),
+      theme: ThemeData.light().copyWith(
+        appBarTheme: AppBarTheme(
+          titleTextStyle: GoogleFonts.signika(color: Colors.black,fontSize: 18),
+          iconTheme: IconThemeData(color: Colors.black)
+        ),
+      ),
       darkTheme: ThemeData.dark(),
       home: Home(),
     );
