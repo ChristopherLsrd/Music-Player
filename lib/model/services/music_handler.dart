@@ -1,3 +1,4 @@
+import 'package:musicplayer/model/raw_model/song.dart';
 import 'package:musicplayer/model/services/music_datas.dart';
 
 import '../enums/Genre.dart';
@@ -51,5 +52,31 @@ class MusicHandler{
     }
 
     return genres;
+  }
+
+  List<Song> allMusicFromArtist(Artist artist){
+    List<Song> playlist=[];
+    final all = datas.allDatas();
+
+    for(var song in all){
+      if(song.artist.name==artist.name){
+        playlist.add(song);
+      }
+    }
+
+    return playlist;
+  }
+
+  List<Song> allMusicFromGenre(Genre genre){
+    List<Song> playlist=[];
+    final all = datas.allDatas();
+
+    for(var song in all){
+      if(song.genre==genre){
+        playlist.add(song);
+      }
+    }
+
+    return playlist;
   }
 }

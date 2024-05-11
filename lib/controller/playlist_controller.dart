@@ -49,7 +49,19 @@ class PlaylistController extends StatelessWidget {
   Widget topView(Size size) {
     switch (type) {
       case Playlist.artist:
-        return Container();
+        return Container(
+          child: Column(
+            children: [
+              ClipOval(
+                child: Image.network(playlist.first.artist.urlImage, height: 125,width: 125,fit: BoxFit.cover,),
+              ),
+              
+
+              Text(playlist.first.artist.name,
+                  style: GoogleFonts.signika(fontSize: 25, color: Colors.red))
+            ],
+          ),
+        );
       case Playlist.album:
         return Container(
           child: Column(
@@ -65,7 +77,9 @@ class PlaylistController extends StatelessWidget {
           ),
         );
       case Playlist.genre:
-        return Container();
+        return Center(
+          child: Text(playlist.first.genre.name,style: GoogleFonts.signika(fontSize: 35,color: Colors.red)),
+        );
       default:
         return Container();
     }
