@@ -70,9 +70,10 @@ class MyPlayerControllerState extends State<MyPlayerController> {
 
   onPlayPausePressed() async {
     final state = audioPlayer.state;
+
     switch (state) {
       case PlayerState.completed:
-        onForwardPressed();
+        (repeat) ? audioPlayer.seek(Duration(seconds: 0)) : onForwardPressed();
         break;
       case PlayerState.stopped:
         setupPlayer();
@@ -80,7 +81,7 @@ class MyPlayerControllerState extends State<MyPlayerController> {
       case PlayerState.playing:
         await audioPlayer.pause();
         break;
-      case PlayerState.disposed:
+      // case PlayerState.disposed:
       case PlayerState.paused:
         await audioPlayer.resume();
         break;
@@ -88,12 +89,23 @@ class MyPlayerControllerState extends State<MyPlayerController> {
     }
   }
 
-  onRewindPressed() {}
-  onForwardPressed() {}
+  onRewindPressed() {
+    final newSong = (playShuffle) ? randomSong() : previousSong();
+    song = newSong;
+    clearPlayer();
+    setupPlayer();
+  }
+
+  onForwardPressed() {
+    final newSong = (playShuffle) ? randomSong() : nextSong();
+    song = newSong;
+    clearPlayer();
+    setupPlayer();
+  }
 
   onPositionChanged(double newPosition) {
-    final newDuration= Duration(seconds: newPosition.toInt());
-      audioPlayer.seek(newDuration);
+    final newDuration = Duration(seconds: newPosition.toInt());
+    audioPlayer.seek(newDuration);
   }
 
   Future<String> pathForInApp() async {
@@ -112,7 +124,7 @@ class MyPlayerControllerState extends State<MyPlayerController> {
         case PlayerState.completed:
           break;
         case PlayerState.stopped:
-          iconData=Icons.play_arrow;
+          iconData = Icons.play_arrow;
           break;
         case PlayerState.playing:
           iconData = Icons.pause;
@@ -126,15 +138,15 @@ class MyPlayerControllerState extends State<MyPlayerController> {
     });
   }
 
-  onDurationChange(Duration duration){
+  onDurationChange(Duration duration) {
     setState(() {
-      maxDuration=duration;
+      maxDuration = duration;
     });
   }
 
-  onPositionChange(Duration duration){
+  onPositionChange(Duration duration) {
     setState(() {
-      position=duration;
+      position = duration;
     });
   }
 
@@ -156,5 +168,30 @@ class MyPlayerControllerState extends State<MyPlayerController> {
       audioCache?.clearAll();
     }
     audioCache = null;
+  }
+
+  Song previousSong() {
+    final int index =
+        widget.playList.indexWhere((song) => song.title == this.song.title);
+    final int newIndex = (index > 0) ? index - 1 : widget.playList.length - 1;
+    final newSong = widget.playList[newIndex];
+    onPositionChange(Duration(seconds: 0));
+    return newSong;
+  }
+
+  Song nextSong() {
+    final int index =
+        widget.playList.indexWhere((song) => song.title == this.song.title);
+    final int newIndex = (index < widget.playList.length - 1) ? index + 1 : 0;
+    final newSong = widget.playList[newIndex];
+    onPositionChange(Duration(seconds: 0));
+    return newSong;
+  }
+
+  Song randomSong() {
+    final int index = Random().nextInt(widget.playList.length);
+    final newSong = widget.playList[index];
+    onPositionChange(Duration(seconds: 0));
+    return newSong;
   }
 }

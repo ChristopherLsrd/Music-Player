@@ -91,7 +91,7 @@ class PlayerView extends StatelessWidget {
                             Padding(padding: padding,child: IconButton(onPressed: onForwardPressed,icon: Icon(Icons.fast_forward),),)
                           ],
                         ),
-                        IconButton(onPressed: onShufflePressed, icon: Icon((shuffle)?Icons.shuffle_rounded : Icons.shuffle_on_rounded),)
+                        IconButton(onPressed: onShufflePressed, icon: Icon((shuffle)?Icons.shuffle_on_rounded : Icons.shuffle_rounded),)
                       ],
                     ),
                     Column(
