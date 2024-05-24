@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:musicplayer/controller/player_controller.dart';
+import 'package:musicplayer/model/enums/Genre.dart';
 import 'package:musicplayer/model/enums/playlist.dart';
 import 'package:musicplayer/model/raw_model/song.dart';
+import 'package:musicplayer/views/cells/classic_tile.dart';
+import 'package:musicplayer/views/cells/genre_cell.dart';
 
 class PlaylistController extends StatelessWidget {
   final List<Song> playlist;
@@ -26,19 +29,8 @@ class PlaylistController extends StatelessWidget {
           topView(MediaQuery.of(context).size),
           Expanded(
               child: ListView.separated(
-                  itemBuilder: ((context, index) {
-                    return ListTile(
-                      leading: Image.network(playlist[index].thumb),
-                      title: Text(playlist[index].title),
-                      trailing: Icon(Icons.play_arrow),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MyPlayerController(songToPlay: playlist[index],playList: playlist,);
-                        }));
-                      },
-                    );
-                  }),
+                itemBuilder: ((context, index)=> ClassicTile(playlist: playlist,index: index,)),
+
                   separatorBuilder: ((context, index) => const Divider()),
                   itemCount: playlist.length))
         ],
